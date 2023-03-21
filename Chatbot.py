@@ -1,10 +1,11 @@
 # Chatbot zum einfachen Kommunizieren mit den Kunden. 
 from data_class import *
-
-enc = tiktoken.get_encoding("cl100k_base") # Kostenberechnung
-request_amount = int()
 load_dotenv()
 
+
+db.connect()
+db.create_tables([Ticket])
+start=datetime.datetime.now
 openai.organization = os.getenv("OPENAI_ORG")
 openai.api_key = os.getenv("OPENAI_KEY")
 
@@ -50,12 +51,22 @@ while user_question != "" and user_question != "bye" and user_question != "fixed
     print(answer)
     user_question = input("\nIf your question was answered and your problem was fixed please write 'fixed'\nIf your problem was not fixed please try asking in a different way.\n")
 
-if user_question == "bye":
-    # Program exit in Datenbank mit einfügen und "Uncertainty" als exit grund hinzufügen
+if request_amount>=3:
+    print("You reached the end of the rainbow, we will create a Ticket for you now.\nA professional will contact you as soon as possible.")
+    state=bool(False)
+    end=datetime.datetime.now
+    functions.create_ticket(username, client, start, user_question, answer, request_amount, state, end)
+
+elif user_question == "bye":
     print("Well by then")
+    state=bool(False)
+    end=datetime.datetime.now
+    functions.create_ticket(username, client, start, user_question, answer, request_amount, state, end)
     exit()
 
 elif user_question == "fixed":
-    #Datenbank input mit "Anfrage gelöst" + answer hinzufügen
     print("Thanks for your cooperation")
+    state=bool(True)
+    end=datetime.datetime.now
+    functions.create_ticket(username, client, start, user_question, answer, request_amount, state, end)
     exit()
