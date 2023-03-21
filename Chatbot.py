@@ -49,24 +49,25 @@ while user_question != "" and user_question != "bye" and user_question != "fixed
     print(len(enc.encode(answer))+question_length) # Print Token amount
 
     print(answer)
+    user_problem=user_question
     user_question = input("\nIf your question was answered and your problem was fixed please write 'fixed'\nIf your problem was not fixed please try asking in a different way.\n")
 
 if request_amount>=3:
     print("You reached the end of the rainbow, we will create a Ticket for you now.\nA professional will contact you as soon as possible.")
     state=bool(False)
     end=datetime.datetime.now
-    functions.create_ticket(username, client, start, user_question, answer, request_amount, state, end)
+    functions.create_ticket(username, client, start, user_problem, answer, request_amount, state, end)
 
 elif user_question == "bye":
     print("Well by then")
     state=bool(False)
     end=datetime.datetime.now
-    functions.create_ticket(username, client, start, user_question, answer, request_amount, state, end)
+    functions.create_ticket(username, client, start, user_problem, answer, request_amount, state, end)
     exit()
 
 elif user_question == "fixed":
     print("Thanks for your cooperation")
     state=bool(True)
     end=datetime.datetime.now
-    functions.create_ticket(username, client, start, user_question, answer, request_amount, state, end)
+    functions.create_ticket(username, client, start, user_problem, answer, request_amount, state, end)
     exit()

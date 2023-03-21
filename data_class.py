@@ -32,6 +32,6 @@ class functions():
         #function to exit program
         exit()
 
-    def create_ticket(username, client, start, user_question, answer, request_amount, state, end):
+    def create_ticket(username, client, start, user_problem, answer, request_amount, state, end):
         #function to create ticket
-        Ticket.create(user=username, CI=client,sessionstart=start, user_input=user_question, final_chat_output=answer, question_rounds=request_amount, is_problem_fixed=state, session_end=end)
+        Ticket.create(user=username, CI=client,sessionstart=start, user_input=user_problem, final_chat_output=answer, question_rounds=request_amount, is_problem_fixed=state, session_end=end)
