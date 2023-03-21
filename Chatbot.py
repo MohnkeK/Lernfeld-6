@@ -14,7 +14,6 @@ username = input("What is your Username?\n")
 if username == "bye": 
     print("Well Bye then")
     exit()
-#Username in Datenbank einfügen
 
 client = input("Whats you Clients name?\n")
 
@@ -25,13 +24,10 @@ if client == "bye":
     print("Well Bye then")
     exit()
 
-#Client in Datenbank einfügen
-
 user_question = input("What seems to be your Problem?\n")
 
 while user_question != "" and user_question != "bye" and user_question != "fixed" and request_amount != 3:
     #Keyword whitelist
-    #Fragen in Datenbank mit einfügen 
     response = openai.Completion.create(
             model="text-davinci-003",
             prompt="only answer if this question is technical: " + user_question,
@@ -39,13 +35,10 @@ while user_question != "" and user_question != "bye" and user_question != "fixed
             temperature=0.6)
     
     answer = response['choices'][0]['text']
-    #Antwort in Datenbank mit einfügen
-
-    #Berechnung der Token (1000t=0.02€)
     question_split = user_question.split()
     question_length = int(len(question_split))
     request_amount = request_amount+1
-    price = price + len(enc.encode(answer))+question_length # Print Token amount
+    price = price + len(enc.encode(answer))+question_length 
 
     print(answer)
     user_problem=user_question
