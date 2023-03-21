@@ -9,18 +9,19 @@ import tiktoken # Debuging für die Kostenberechnung
 request_amount = int()
 enc = tiktoken.get_encoding("cl100k_base") # Kostenberechnung
 db = SqliteDatabase('Tickets.db')
+price=int(0)
 
 
 #Database Classes 
 class Ticket(Model):
     user = CharField()
     CI = CharField()
-    sessionstart = CharField()
+    ticket_create_date = DateTimeField(default=datetime.datetime.now)
     user_input = TextField()
     final_chat_output = TextField()
     question_rounds = IntegerField()
     is_problem_fixed = BooleanField()
-    session_end = CharField()
+    cost=IntegerField()
 
     class Meta:
         database = db
@@ -32,6 +33,6 @@ class functions():
         #function to exit program
         exit()
 
-    def create_ticket(username, client, start, user_problem, answer, request_amount, state, end):
+    def create_ticket(username, client, user_problem, answer, request_amount, state, price):
         #function to create ticket
-        Ticket.create(user=username, CI=client,sessionstart=start, user_input=user_problem, final_chat_output=answer, question_rounds=request_amount, is_problem_fixed=state, session_end=end)
+        Ticket.create(user=username, CI=client, user_input=user_problem, final_chat_output=answer, question_rounds=request_amount, is_problem_fixed=state, cost=price)

@@ -5,7 +5,6 @@ load_dotenv()
 
 db.connect()
 db.create_tables([Ticket])
-start=datetime.datetime.now
 openai.organization = os.getenv("OPENAI_ORG")
 openai.api_key = os.getenv("OPENAI_KEY")
 
@@ -46,7 +45,7 @@ while user_question != "" and user_question != "bye" and user_question != "fixed
     question_split = user_question.split()
     question_length = int(len(question_split))
     request_amount = request_amount+1
-    print(len(enc.encode(answer))+question_length) # Print Token amount
+    price = price + len(enc.encode(answer))+question_length # Print Token amount
 
     print(answer)
     user_problem=user_question
@@ -55,19 +54,17 @@ while user_question != "" and user_question != "bye" and user_question != "fixed
 if request_amount>=3:
     print("You reached the end of the rainbow, we will create a Ticket for you now.\nA professional will contact you as soon as possible.")
     state=bool(False)
-    end=datetime.datetime.now
-    functions.create_ticket(username, client, start, user_problem, answer, request_amount, state, end)
+    functions.create_ticket(username, client, user_problem, answer, request_amount, state, price)
+    exit()
 
 elif user_question == "bye":
     print("Well by then")
     state=bool(False)
-    end=datetime.datetime.now
-    functions.create_ticket(username, client, start, user_problem, answer, request_amount, state, end)
+    functions.create_ticket(username, client, user_problem, answer, request_amount, state, price)
     exit()
 
 elif user_question == "fixed":
     print("Thanks for your cooperation")
     state=bool(True)
-    end=datetime.datetime.now
-    functions.create_ticket(username, client, start, user_problem, answer, request_amount, state, end)
+    functions.create_ticket(username, client, user_problem, answer, request_amount, state, price)
     exit()
