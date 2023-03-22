@@ -1,6 +1,7 @@
 import re 
 import openai
 import os
+import time
 from peewee import *
 import datetime
 from dotenv import load_dotenv
