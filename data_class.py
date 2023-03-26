@@ -38,6 +38,15 @@ class functions():
         #function to create ticket
         Ticket.create(user=username, CI=client, user_input=user_problem, final_chat_output=answer, question_rounds=request_amount, is_problem_fixed=state, cost=price)
 
+    def keyword_check(user_question_split):
+        #function to compare question to keyword list
+        for question in user_question_split:
+            for keyword in tech_support_keywords:
+                if question == keyword: 
+                    return True
+        return False        
+
+
 tech_support_keywords = [
     "error",
     "bug",
@@ -204,5 +213,7 @@ tech_support_keywords = [
     "ITIL",
     "DevOps",
     "agile",
-    "SCRUM"
+    "SCRUM",
+    "files",
+    "computer"
 ]
