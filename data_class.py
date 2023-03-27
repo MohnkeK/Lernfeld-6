@@ -11,6 +11,9 @@ request_amount = int()
 enc = tiktoken.get_encoding("cl100k_base") # Kostenberechnung
 db = SqliteDatabase('Tickets.db')
 price=int(0)
+user_problem = str()
+answer = str()
+state = False
 
 
 #Database Classes 
