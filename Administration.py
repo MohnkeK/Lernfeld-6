@@ -13,16 +13,32 @@ while admin_input != "close":
             print("Ticket ID: " + str(entry) + " | Client: " + entry.CI + " | Problem: " +
                   entry.user_input + " | Created: " + str(entry.ticket_create_date))
         admin_input = input("Please choose a ticket ID to work on:\n")
-        while admin_input != "close" and admin_input != "":
-            print(admin_input)
+        
+        while admin_input != "close" and admin_input != "" and admin_input != "4":
             entry = Ticket.get(Ticket.id == admin_input)
             client = entry.CI
             print("Ticket ID: " + str(entry) + " | Client: " + entry.CI + " | Problem: " + entry.user_input +
                   " | Answer: " + entry.final_chat_output + " | Created: " + str(entry.ticket_create_date) + "\n")
-            admin_input = input("Please choose your option: \n")
-            # ping test
-            # rdp
-            # general info
+            
+            while admin_input != "close" and admin_input != "" and admin_input != "4":
+                admin_input = input("Please choose your option: \n1 Test ping to Client\n2 Remote connect to client\n3 Show Client information\n4: Mark ticket as resolved\n")
+                # ping test
+                # rdp
+                # general info
+                if admin_input == "1":
+                    print("No Ping available\n")
+                elif admin_input == "2":
+                    print("Function not set yet\n")
+                elif admin_input == "3":
+                    print("Client Information unavailable\n")
+                elif admin_input == "4":
+                    update = Ticket.update({Ticket.is_problem_fixed: True}).where(Ticket.id == str(entry))
+                    update.execute()
+                    print("Ticket was marked as resolved\n")
+
+        if admin_input == "close":
+            print("Have a nice day.\n")
+            exit()    
 
     else:
         print("No Tickets available.... Refreshing in 10 seconds")
