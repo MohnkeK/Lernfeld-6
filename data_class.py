@@ -1,22 +1,22 @@
-import re 
+import re
 import openai
 import os
 import time
 from peewee import *
 import datetime
 from dotenv import load_dotenv
-import tiktoken # Debuging für die Kostenberechnung
-    
+import tiktoken  # Debuging für die Kostenberechnung
+
 request_amount = int()
-enc = tiktoken.get_encoding("cl100k_base") # Kostenberechnung
+enc = tiktoken.get_encoding("cl100k_base")  # Kostenberechnung
 db = SqliteDatabase('Tickets.db')
-price=int(0)
+price = int(0)
 user_problem = str()
 answer = str()
 state = False
 
 
-#Database Classes 
+# Database Classes
 class Ticket(Model):
     user = CharField()
     CI = CharField()
@@ -25,29 +25,32 @@ class Ticket(Model):
     final_chat_output = TextField()
     question_rounds = IntegerField()
     is_problem_fixed = BooleanField()
-    cost=IntegerField()
+    cost = IntegerField()
 
     class Meta:
         database = db
 
-#General function
+# General function
+
+
 class functions():
 
     def exit():
-        #function to exit program
+        # function to exit program
         exit()
 
     def create_ticket(username, client, user_problem, answer, request_amount, state, price):
-        #function to create ticket
-        Ticket.create(user=username, CI=client, user_input=user_problem, final_chat_output=answer, question_rounds=request_amount, is_problem_fixed=state, cost=price)
+        # function to create ticket
+        Ticket.create(user=username, CI=client, user_input=user_problem, final_chat_output=answer,
+                      question_rounds=request_amount, is_problem_fixed=state, cost=price)
 
     def keyword_check(user_question_split):
-        #function to compare question to keyword list
+        # function to compare question to keyword list
         for question in user_question_split:
             for keyword in tech_support_keywords:
-                if question == keyword: 
+                if question == keyword:
                     return True
-        return False        
+        return False
 
 
 tech_support_keywords = [
