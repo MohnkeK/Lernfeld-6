@@ -1,4 +1,4 @@
-# Chatbot zum einfachen Kommunizieren mit den Kunden.
+# Chatbot for easy communication with the customer.
 from data_class import *
 load_dotenv()
 

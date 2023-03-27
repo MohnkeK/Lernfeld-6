@@ -5,10 +5,10 @@ import time
 from peewee import *
 import datetime
 from dotenv import load_dotenv
-import tiktoken  # Debuging für die Kostenberechnung
+import tiktoken  # Cost 
 
 request_amount = int()
-enc = tiktoken.get_encoding("cl100k_base")  # Kostenberechnung
+enc = tiktoken.get_encoding("cl100k_base")  # Cost
 db = SqliteDatabase('Tickets.db')
 price = int(0)
 user_problem = str()
